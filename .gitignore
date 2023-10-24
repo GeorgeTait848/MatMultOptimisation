@@ -1,10 +1,11 @@
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
-
+MMOptimisation/MMOptimisation.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+MMOptimisation/MMOptimisation.xcodeproj/
 ## User settings
 xcuserdata/
-
+*.pbxproj
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
 *.xccheckout
@@ -40,7 +41,8 @@ playground.xcworkspace
 # Packages/
 # Package.pins
 # Package.resolved
-# *.xcodeproj
+xcodeproj/
+ *.xcodeproj
 #
 # Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
 # hence it is not needed unless you have added a package configuration file to your project
