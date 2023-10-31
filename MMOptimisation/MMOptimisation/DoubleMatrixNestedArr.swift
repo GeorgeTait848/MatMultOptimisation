@@ -82,7 +82,7 @@ public struct DoubleMatrixNestedArr {
     }
     
     
-    public func accelerateFrameworkMatrixMult(_ rhs: DoubleMatrixNestedArr) -> DoubleMatrixNestedArr {
+    public func accelerateFrameworkMatrixMultiplication(_ rhs: DoubleMatrixNestedArr) -> DoubleMatrixNestedArr {
         
         let dim = self.elements.count
         var outputElementsFlat = [Double](repeating: 0.0, count: dim*dim)
@@ -165,18 +165,7 @@ public struct DoubleMatrixNestedArr {
         return DoubleMatrixNestedArr(elements: output)
     }
     
-    public func parallelAddPadding() -> DoubleMatrixNestedArr {
-        
-        var output = elements
-        let padRows: (_ index: Int) -> Void = {index in output[index].append(0.0)}
-        
-        DispatchQueue.concurrentPerform(iterations: output.count, execute: padRows)
-        
-        output.append([Double](repeating: 0.0, count: elements.count + 1))
-        
-        return DoubleMatrixNestedArr(elements: output)
-        
-    }
+     
 
     public func removePadding() -> DoubleMatrixNestedArr {
         var output = elements

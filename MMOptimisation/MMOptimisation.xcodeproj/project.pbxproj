@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		600859842AE17B22006B90FD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600859832AE17B22006B90FD /* main.swift */; };
+		6008598B2AE17B3A006B90FD /* DoubleMatrixNestedArr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008598A2AE17B3A006B90FD /* DoubleMatrixNestedArr.swift */; };
+		6008598F2AE1B190006B90FD /* timeComplexities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008598E2AE1B190006B90FD /* timeComplexities.swift */; };
+		600859A92AE85484006B90FD /* DoubleMatrixRowMajor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +28,29 @@
 /* Begin PBXFileReference section */
 		600859802AE17B22006B90FD /* MMOptimisation */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MMOptimisation; sourceTree = BUILT_PRODUCTS_DIR; };
 		600859832AE17B22006B90FD /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		6008598A2AE17B3A006B90FD /* DoubleMatrixNestedArr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleMatrixNestedArr.swift; sourceTree = "<group>"; };
+		6008598E2AE1B190006B90FD /* timeComplexities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timeComplexities.swift; sourceTree = "<group>"; };
+		600859962AE66751006B90FD /* AlgorithmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlgorithmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		600859A12AE68153006B90FD /* MMOptimisationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMOptimisationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleMatrixRowMajor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6008597D2AE17B22006B90FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		600859932AE66751006B90FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6008599E2AE68153006B90FD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -50,6 +72,8 @@
 			isa = PBXGroup;
 			children = (
 				600859802AE17B22006B90FD /* MMOptimisation */,
+				600859962AE66751006B90FD /* AlgorithmTests.xctest */,
+				600859A12AE68153006B90FD /* MMOptimisationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,6 +82,9 @@
 			isa = PBXGroup;
 			children = (
 				600859832AE17B22006B90FD /* main.swift */,
+				6008598E2AE1B190006B90FD /* timeComplexities.swift */,
+				6008598A2AE17B3A006B90FD /* DoubleMatrixNestedArr.swift */,
+				600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */,
 			);
 			path = MMOptimisation;
 			sourceTree = "<group>";
@@ -82,6 +109,40 @@
 			productReference = 600859802AE17B22006B90FD /* MMOptimisation */;
 			productType = "com.apple.product-type.tool";
 		};
+		600859952AE66751006B90FD /* AlgorithmTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6008599A2AE66751006B90FD /* Build configuration list for PBXNativeTarget "AlgorithmTests" */;
+			buildPhases = (
+				600859922AE66751006B90FD /* Sources */,
+				600859932AE66751006B90FD /* Frameworks */,
+				600859942AE66751006B90FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AlgorithmTests;
+			productName = AlgorithmTests;
+			productReference = 600859962AE66751006B90FD /* AlgorithmTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		600859A02AE68153006B90FD /* MMOptimisationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 600859A52AE68153006B90FD /* Build configuration list for PBXNativeTarget "MMOptimisationTests" */;
+			buildPhases = (
+				6008599D2AE68153006B90FD /* Sources */,
+				6008599E2AE68153006B90FD /* Frameworks */,
+				6008599F2AE68153006B90FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MMOptimisationTests;
+			productName = MMOptimisationTests;
+			productReference = 600859A12AE68153006B90FD /* MMOptimisationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +154,12 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					6008597F2AE17B22006B90FD = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					600859952AE66751006B90FD = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					600859A02AE68153006B90FD = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
@@ -111,16 +178,52 @@
 			projectRoot = "";
 			targets = (
 				6008597F2AE17B22006B90FD /* MMOptimisation */,
+				600859952AE66751006B90FD /* AlgorithmTests */,
+				600859A02AE68153006B90FD /* MMOptimisationTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		600859942AE66751006B90FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6008599F2AE68153006B90FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6008597C2AE17B22006B90FD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6008598F2AE1B190006B90FD /* timeComplexities.swift in Sources */,
+				6008598B2AE17B3A006B90FD /* DoubleMatrixNestedArr.swift in Sources */,
+				600859A92AE85484006B90FD /* DoubleMatrixRowMajor.swift in Sources */,
 				600859842AE17B22006B90FD /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		600859922AE66751006B90FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6008599D2AE68153006B90FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +349,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 82BRN88N8D;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -257,8 +362,80 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 82BRN88N8D;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		6008599B2AE66751006B90FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 82BRN88N8D;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "George-Tait.AlgorithmTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6008599C2AE66751006B90FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 82BRN88N8D;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "George-Tait.AlgorithmTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		600859A62AE68153006B90FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 82BRN88N8D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "George-Tait.MMOptimisationTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		600859A72AE68153006B90FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 82BRN88N8D;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "George-Tait.MMOptimisationTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -279,6 +456,24 @@
 			buildConfigurations = (
 				600859882AE17B22006B90FD /* Debug */,
 				600859892AE17B22006B90FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6008599A2AE66751006B90FD /* Build configuration list for PBXNativeTarget "AlgorithmTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6008599B2AE66751006B90FD /* Debug */,
+				6008599C2AE66751006B90FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		600859A52AE68153006B90FD /* Build configuration list for PBXNativeTarget "MMOptimisationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				600859A62AE68153006B90FD /* Debug */,
+				600859A72AE68153006B90FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
