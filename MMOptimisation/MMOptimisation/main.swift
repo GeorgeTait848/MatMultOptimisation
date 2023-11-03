@@ -7,9 +7,10 @@
 
 import Foundation
 
-print("Hello, World!\n")
+print("Hello, World!")
+let pathFromHomeDirectory = CommandLine.arguments[1]
 
-let dims = [32,64,128,256,512]
+let dims = [32,64,128,256,512,1024,2048]
 
 let BFMM: (_ A: DoubleMatrixNestedArr, _ B: DoubleMatrixNestedArr) -> DoubleMatrixNestedArr = {A,B in return A.bruteForceMatrixMultiplication(B)}
 
@@ -17,5 +18,9 @@ let DCMM: (_ A: DoubleMatrixNestedArr, _ B: DoubleMatrixNestedArr) -> DoubleMatr
 
 let AMM: (_ A: DoubleMatrixNestedArr, _ B: DoubleMatrixNestedArr) -> DoubleMatrixNestedArr = {A,B in return A.accelerateFrameworkMatrixMultiplication(B)}
 
-storeElapsedTimeDataToFile(dims: dims, operations: [BFMM, DCMM, AMM], columnNames: ["BFMM", "DCMM", "AMM"], pathFromHomeDirectory: "Desktop/rtData/timeComplexities.tsv")
+
+
+storeElapsedTimeDataToFile(dims: dims, operations: [BFMM, DCMM, AMM], columnNames: ["BFMM", "DCMM", "AMM"], pathFromHomeDirectory: pathFromHomeDirectory, logScaleX: true, logScaleY: true)
+
+
 

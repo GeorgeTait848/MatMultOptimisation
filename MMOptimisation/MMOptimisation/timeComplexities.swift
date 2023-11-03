@@ -158,7 +158,7 @@ public func getElapsedTimeData(dims: [Int], operation: (DoubleMatrixRowMajor, Do
     return times
 }
 
-public func storeElapsedTimeDataToFile(dims: [Int], operations: [(DoubleMatrixNestedArr,DoubleMatrixNestedArr) -> DoubleMatrixNestedArr], columnNames: [String], pathFromHomeDirectory: String) {
+public func storeElapsedTimeDataToFile(dims: [Int], operations: [(DoubleMatrixNestedArr,DoubleMatrixNestedArr) -> DoubleMatrixNestedArr], columnNames: [String], pathFromHomeDirectory: String, logScaleX: Bool = false, logScaleY: Bool = false) {
     
     let pathToFile = FileManager.default.homeDirectoryForCurrentUser.path() + pathFromHomeDirectory
     let fileExists = FileManager.default.fileExists(atPath: pathToFile)
@@ -175,11 +175,11 @@ public func storeElapsedTimeDataToFile(dims: [Int], operations: [(DoubleMatrixNe
     }
     
     let columnsText = "dims\t" + columnNames.joined(separator: "\t") + "\n"
-    let outputText = columnsText + convertElapsedTimeDataToWriteableFormat(dims: dims, operations: operations)
+    let outputText = columnsText + convertElapsedTimeDataToWriteableFormat(dims: dims, operations: operations, logScaleX: logScaleX, logScaleY: logScaleY)
 
     
     do {
-        try outputText.write(toFile: pathToFile, atomically: false, encoding: .utf8)
+        try outputText.write(toFile: pathToFile, atomically: true, encoding: .utf8)
         
     }
     catch {print("Unexpected Error: Could not write to file")}
@@ -204,23 +204,29 @@ public func storeElapsedTimeDataToFile(dims: [Int], operations: [(DoubleMatrixRo
     
 }
 
-public func convertElapsedTimeDataToWriteableFormat(dims: [Int], operations: [(DoubleMatrixNestedArr,DoubleMatrixNestedArr) -> DoubleMatrixNestedArr]) -> String {
+public func convertElapsedTimeDataToWriteableFormat(dims: [Int], operations: [(DoubleMatrixNestedArr,DoubleMatrixNestedArr) -> DoubleMatrixNestedArr], logScaleX: Bool = false, logScaleY: Bool = false) -> String {
     
     var times = [[Double]](repeating: [Double](repeating: 0.0, count: dims.count), count: operations.count)
 
     for i in 0..<operations.count {
-        times[i] = getElapsedTimeData(dims: dims, operation: operations[i])
+        let currTimes = getElapsedTimeData(dims: dims, operation: operations[i])
+        
+        if logScaleY { times[i] = currTimes.map{log($0)}}
+        else {times[i] = currTimes}
     }
     
     var outputText = ""
     
     for i in 0..<dims.count {
-        outputText += "\(dims[i])\t"
+        
+        if logScaleX { outputText += "\(log(Double(dims[i])))\t" }
+        else { outputText += "\(dims[i])\t" }
+        
         
         for j in 0..<operations.count-1 {
-            
             outputText += "\(String(format: "%4.3f", times[j][i]))\t"
         }
+        
         outputText += "\(String(format: "%4.3f", times[operations.count-1][i]))\n"
     }
     
