@@ -40,7 +40,7 @@ public func estimateTimeComplexity(dims: [Int], operation: (DoubleMatrixNestedAr
 }
 
 
-public func estimateTimeComplexity(dims: [Int], operation: (DoubleMatrixRowMajor, DoubleMatrixRowMajor)-> DoubleMatrixRowMajor) -> (Double, Double, Double) {
+public func estimateTimeComplexity(dims: [Int], operation: (DoubleMatrixRowMajor, DoubleMatrixRowMajor)-> DoubleMatrixRowMajor) -> (Double, Double, Double, Double) {
     
     let elapsedTimes = getElapsedTimeData(dims: dims, operation: operation)
     let totalTime = elapsedTimes.reduce(0, +)
@@ -48,10 +48,10 @@ public func estimateTimeComplexity(dims: [Int], operation: (DoubleMatrixRowMajor
     
     let logDims = dims.map{ log(Double($0)) }
 
-    let (omega, _) = getLinearFitCoefficientsFromLeastSquaresMethod(logDims, logElapsedTimes)
+    let (omega, intercept) = getLinearFitCoefficientsFromLeastSquaresMethod(logDims, logElapsedTimes)
     
     let r_sq = getRSquaredCoefficient(logDims, logElapsedTimes)
-    return (omega, r_sq, totalTime)
+    return (omega, r_sq, intercept, totalTime)
     
     
 }
@@ -186,18 +186,26 @@ public func storeElapsedTimeDataToFile(dims: [Int], operations: [(DoubleMatrixNe
     
 }
 
-public func storeElapsedTimeDataToFile(dims: [Int], operations: [(DoubleMatrixRowMajor,DoubleMatrixRowMajor) -> DoubleMatrixRowMajor], pathFromHomeDirectory: String) {
+
+
+public func storeElapsedTimeDataToFileRowMajor(dims: [Int], operations: [(DoubleMatrixRowMajor,DoubleMatrixRowMajor) -> DoubleMatrixRowMajor], columnNames: [String], pathFromHomeDirectory: String, logScaleX: Bool = false, logScaleY: Bool = false) {
+
+    let pathToFile = FileManager.default.homeDirectoryForCurrentUser.path() + pathFromHomeDirectory
+    let fileExists =  FileManager.default.fileExists(atPath: pathToFile)
     
-    let fileExists = FileManager.default.fileExists(atPath: pathFromHomeDirectory)
-    print(fileExists)
+    if !fileExists {
+        let success = FileManager.default.createFile(atPath: pathToFile, contents: nil, attributes: nil)
+        if success {
+            print("Created file at \(pathToFile)")
+        }
+    }
     
-    if !fileExists { FileManager.default.createFile(atPath: pathFromHomeDirectory, contents: nil, attributes: nil) }
-    
-    let outputText = convertElapsedTimeDataToWriteableFormat(dims: dims, operations: operations)
+    let columnsText = "dims\t" + columnNames.joined(separator: "\t") + "\n"
+    let outputText = columnsText + convertElapsedTimeDataToWriteableFormatRowMajor(dims: dims, operations: operations, logScaleX: logScaleX, logScaleY: logScaleY)
     
     do {
     
-    try  outputText.write(toFile: pathFromHomeDirectory, atomically: false, encoding: .utf8) }
+    try  outputText.write(toFile: pathToFile, atomically: true, encoding: .utf8) }
     
     catch {print("Unexpected Error: Could not write to file")}
     
@@ -233,18 +241,23 @@ public func convertElapsedTimeDataToWriteableFormat(dims: [Int], operations: [(D
     return outputText
 }
 
-public func convertElapsedTimeDataToWriteableFormat(dims: [Int], operations: [(DoubleMatrixRowMajor,DoubleMatrixRowMajor) -> DoubleMatrixRowMajor]) -> String {
+public func convertElapsedTimeDataToWriteableFormatRowMajor(dims: [Int], operations: [(DoubleMatrixRowMajor,DoubleMatrixRowMajor) -> DoubleMatrixRowMajor], logScaleX: Bool = false, logScaleY: Bool = false) -> String {
     
     var times = [[Double]](repeating: [Double](repeating: 0.0, count: dims.count), count: operations.count)
 
     for i in 0..<operations.count {
-        times[i] = getElapsedTimeData(dims: dims, operation: operations[i])
+        let currTimes = getElapsedTimeData(dims: dims, operation: operations[i])
+        
+        if logScaleY { times[i] = currTimes.map{log($0)}}
+        else {times[i] = currTimes}
     }
     
     var outputText = ""
     
     for i in 0..<dims.count {
-        outputText += "\(dims[i])\t"
+        
+        if logScaleX { outputText += "\(log(Double(dims[i])))\t" }
+        else { outputText += "\(dims[i])\t" }
         
         for j in 0..<operations.count-1 {
             outputText += "\(String(format: "%4.3f", times[j][i]))\t"
