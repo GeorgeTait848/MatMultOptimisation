@@ -9,11 +9,11 @@ import Foundation
 
 print("Hello, World!")
 //
-//let pathFromHomeDirectory = CommandLine.arguments[1]
+let pathFromHomeDirectory = CommandLine.arguments[1]
 //
 ////let dims = Array(1...200) + Array(stride(from: 201, through: 10_000, by: 100))
-//let dims = Array(stride(from: 2, through: 5000, by: 10))
-let dims = Array(stride(from: 2, through: 512, by: 1)) + Array(stride(from: 520, through: 1000, by: 100)) + [1024]
+let dims = Array(stride(from: 2, through: 500, by: 10))
+//let dims = Array(stride(from: 2, through: 512, by: 1)) + Array(stride(from: 520, through: 1000, by: 100)) + [1024]
 
 
 //
@@ -37,15 +37,15 @@ let SMM: (_ A: DoubleMatrixRowMajor, _ B: DoubleMatrixRowMajor) -> DoubleMatrixR
 
 let AMM: (_ A: DoubleMatrixRowMajor, _ B: DoubleMatrixRowMajor) -> DoubleMatrixRowMajor = {A,B in return A.accelerateFrameworkMatrixMultiplication(B)}
 //
-let (tcbf, bfr_sq, bf_lna, bftt) = estimateTimeComplexity(dims: dims, operation: BFMM)
-let (tca, ar_sq, a_lna, att) = estimateTimeComplexity(dims: dims, operation: AMM)
-let (tcs, sr_sq, s_lna, stt) = estimateTimeComplexity(dims: dims, operation: SMM)
-print(tcbf, bfr_sq, bf_lna, bftt)
-print(tca, ar_sq, a_lna, att)
-print(tcs, sr_sq, s_lna, stt)
+//let (tcbf, bfr_sq, bf_lna, bftt) = estimateTimeComplexity(dims: dims, operation: BFMM)
+//let (tca, ar_sq, a_lna, att) = estimateTimeComplexity(dims: dims, operation: AMM)
+//let (tcs, sr_sq, s_lna, stt) = estimateTimeComplexity(dims: dims, operation: SMM)
+//print(tcbf, bfr_sq, bf_lna, bftt)
+//print(tca, ar_sq, a_lna, att)
+//print(tcs, sr_sq, s_lna, stt)
 
 
-//storeElapsedTimeDataToFileRowMajor(dims: dims, operations: [BFMM, SMM ,AMM], columnNames: ["BruteForce", "Strassen","Accelerate"], pathFromHomeDirectory: pathFromHomeDirectory, logScaleX: true, logScaleY: true)
+storeElapsedTimeDataToFileRowMajor(dims: dims, operations: [SMM], columnNames: [ "Strassen"], pathFromHomeDirectory: pathFromHomeDirectory, logScaleX: true, logScaleY: true)
 
 ////
 //
