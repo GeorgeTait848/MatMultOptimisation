@@ -1,0 +1,8 @@
+pwd
+# Set up the plot
+set xlabel 'X-axis'
+set ylabel 'Y-axis'
+set title 'Multiple Curves from .dat file'
+set key autotitle columnheader
+num_columns = 3
+plot for [i=2:num_columns] 'test.dat' using 1:i with lines

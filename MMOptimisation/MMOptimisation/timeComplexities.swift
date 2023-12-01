@@ -9,35 +9,6 @@ import Foundation
 
 
 
-public func estimateMatMultTimeComplexity(dims: [Int], operation: (DoubleMatrixNestedArr, DoubleMatrixNestedArr) -> DoubleMatrixNestedArr) -> (Double, Double, Double) {
-    
-    
-    let elapsedTimes = getElapsedTimeData(dims: dims, operation: operation)
-    let totalTime = elapsedTimes.reduce(0, +)
-    let logElapsedTimes = elapsedTimes.map{ log($0) }
-    
-    let logDims = dims.map{ log(Double($0)) }
-
-    let (omega, _) = getLinearFitCoefficientsFromLeastSquaresMethod(logDims, logElapsedTimes)
-    
-    let r_sq = getRSquaredCoefficient(logDims, logElapsedTimes)
-    return (omega, r_sq, totalTime)
-    
-}
-
-public func estimateTimeComplexity(dims: [Int], operation: (DoubleMatrixNestedArr) -> DoubleMatrixNestedArr) -> (Double, Double, Double) {
-    
-    let elapsedTimes = getElapsedTimeData(dims: dims, operation: operation)
-    let totalTime = elapsedTimes.reduce(0, +)
-    let logElapsedTimes = elapsedTimes.map{ log($0) }
-    
-    let logDims = dims.map{ log(Double($0)) }
-
-    let (omega, _) = getLinearFitCoefficientsFromLeastSquaresMethod(logDims, logElapsedTimes)
-    
-    let r_sq = getRSquaredCoefficient(logDims, logElapsedTimes)
-    return (omega, r_sq, totalTime)
-}
 
 
 public func estimateTimeComplexity(dims: [Int], operation: (DoubleMatrixRowMajor, DoubleMatrixRowMajor)-> DoubleMatrixRowMajor) -> (Double, Double, Double, Double) {
@@ -71,48 +42,7 @@ public func estimateTimeComplexity(dims: [Int], operation: (DoubleMatrixRowMajor
 }
 
 
-public func getElapsedTimeData(dims: [Int], operation: (DoubleMatrixNestedArr, DoubleMatrixNestedArr) -> DoubleMatrixNestedArr) -> [Double] {
 
-    
-    let lhs = dims.map{DoubleMatrixNestedArr(elements: [[Double]](repeating: [Double](repeating: Double(Int.random(in: 0..<3)), count: $0), count: $0))}
-    let rhs = dims.map{DoubleMatrixNestedArr(elements: [[Double]](repeating: [Double](repeating: Double(Int.random(in: 0..<3)), count: $0), count: $0))}
-    
-    var times = [Double](repeating: 0, count: dims.count)
-    
-    for i in 0..<dims.count {
-        let startTime = clock()
-        let _ = operation(lhs[i], rhs[i])
-        let endTime = clock()
-        
-        let elapsedTime = Double((endTime - startTime))/Double(CLOCKS_PER_SEC/1_000)
-        
-        times[i] = elapsedTime
-    }
-    
-    
-    return times
-}
-
-public func getElapsedTimeData(dims: [Int], operation: (DoubleMatrixNestedArr) -> DoubleMatrixNestedArr) -> [Double] {
-
-    
-    let temp = dims.map{DoubleMatrixNestedArr(elements: [[Double]](repeating: [Double](repeating: Double(Int.random(in: 0..<3)), count: $0), count: $0))}
-    
-    var times = [Double](repeating: 0, count: dims.count)
-    
-    for i in 0..<dims.count {
-        let startTime = clock()
-        let _ = operation(temp[i])
-        let endTime = clock()
-        
-        let elapsedTime = Double((endTime - startTime))/Double(CLOCKS_PER_SEC/1_000)
-        
-        times[i] = elapsedTime
-    }
-    
-    
-    return times
-}
 
 public func getElapsedTimeData(dims: [Int], operation: (DoubleMatrixRowMajor) -> DoubleMatrixRowMajor) -> [Double] {
 
@@ -158,33 +88,8 @@ public func getElapsedTimeData(dims: [Int], operation: (DoubleMatrixRowMajor, Do
     return times
 }
 
-public func storeElapsedTimeDataToFile(dims: [Int], operations: [(DoubleMatrixNestedArr,DoubleMatrixNestedArr) -> DoubleMatrixNestedArr], columnNames: [String], pathFromHomeDirectory: String, logScaleX: Bool = false, logScaleY: Bool = false) {
-    
-    let pathToFile = FileManager.default.homeDirectoryForCurrentUser.path() + pathFromHomeDirectory
-    let fileExists = FileManager.default.fileExists(atPath: pathToFile)
-    
-    if !fileExists {
-        let success = FileManager.default.createFile(atPath: pathToFile, contents: nil)
-        if success {
-            print("Created file at \(pathToFile)")
-        }
-        else {
-            print("Unexpected Error: Could not create file.")
-            return
-        }
-    }
-    
-    let columnsText = "dims\t" + columnNames.joined(separator: "\t") + "\n"
-    let outputText = columnsText + convertElapsedTimeDataToWriteableFormat(dims: dims, operations: operations, logScaleX: logScaleX, logScaleY: logScaleY)
 
-    
-    do {
-        try outputText.write(toFile: pathToFile, atomically: true, encoding: .utf8)
-        
-    }
-    catch {print("Unexpected Error: Could not write to file")}
-    
-}
+
 
 
 
@@ -212,34 +117,7 @@ public func storeElapsedTimeDataToFileRowMajor(dims: [Int], operations: [(Double
     
 }
 
-public func convertElapsedTimeDataToWriteableFormat(dims: [Int], operations: [(DoubleMatrixNestedArr,DoubleMatrixNestedArr) -> DoubleMatrixNestedArr], logScaleX: Bool = false, logScaleY: Bool = false) -> String {
-    
-    var times = [[Double]](repeating: [Double](repeating: 0.0, count: dims.count), count: operations.count)
 
-    for i in 0..<operations.count {
-        let currTimes = getElapsedTimeData(dims: dims, operation: operations[i])
-        
-        if logScaleY { times[i] = currTimes.map{log($0)}}
-        else {times[i] = currTimes}
-    }
-    
-    var outputText = ""
-    
-    for i in 0..<dims.count {
-        
-        if logScaleX { outputText += "\(log(Double(dims[i])))\t" }
-        else { outputText += "\(dims[i])\t" }
-        
-        
-        for j in 0..<operations.count-1 {
-            outputText += "\(String(format: "%4.3f", times[j][i]))\t"
-        }
-        
-        outputText += "\(String(format: "%4.3f", times[operations.count-1][i]))\n"
-    }
-    
-    return outputText
-}
 
 public func convertElapsedTimeDataToWriteableFormatRowMajor(dims: [Int], operations: [(DoubleMatrixRowMajor,DoubleMatrixRowMajor) -> DoubleMatrixRowMajor], logScaleX: Bool = false, logScaleY: Bool = false) -> String {
     
