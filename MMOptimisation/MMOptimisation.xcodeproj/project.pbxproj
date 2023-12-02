@@ -10,7 +10,7 @@
 		600859842AE17B22006B90FD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600859832AE17B22006B90FD /* main.swift */; };
 		6008598F2AE1B190006B90FD /* timeComplexities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008598E2AE1B190006B90FD /* timeComplexities.swift */; };
 		600859A92AE85484006B90FD /* DoubleMatrixRowMajor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */; };
-		6022FAC82B1921C100389BCA /* SparseMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6022FAC72B1921C100389BCA /* SparseMatrix.swift */; };
+		60F702322B1B82B900E5A461 /* SparseMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F702312B1B82B900E5A461 /* SparseMatrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,7 +32,7 @@
 		600859962AE66751006B90FD /* AlgorithmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlgorithmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		600859A12AE68153006B90FD /* MMOptimisationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMOptimisationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleMatrixRowMajor.swift; sourceTree = "<group>"; };
-		6022FAC72B1921C100389BCA /* SparseMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SparseMatrix.swift; path = ../../../Quantum/Sources/Quantum/Types/SparseMatrix.swift; sourceTree = "<group>"; };
+		60F702312B1B82B900E5A461 /* SparseMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparseMatrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,7 @@
 				600859832AE17B22006B90FD /* main.swift */,
 				6008598E2AE1B190006B90FD /* timeComplexities.swift */,
 				600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */,
-				6022FAC72B1921C100389BCA /* SparseMatrix.swift */,
+				60F702312B1B82B900E5A461 /* SparseMatrix.swift */,
 			);
 			path = MMOptimisation;
 			sourceTree = "<group>";
@@ -206,8 +206,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60F702322B1B82B900E5A461 /* SparseMatrix.swift in Sources */,
 				6008598F2AE1B190006B90FD /* timeComplexities.swift in Sources */,
-				6022FAC82B1921C100389BCA /* SparseMatrix.swift in Sources */,
 				600859A92AE85484006B90FD /* DoubleMatrixRowMajor.swift in Sources */,
 				600859842AE17B22006B90FD /* main.swift in Sources */,
 			);

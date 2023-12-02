@@ -5,7 +5,7 @@ MMOptimisation/MMOptimisation.xcodeproj/project.xcworkspace/xcshareddata/IDEWork
 MMOptimisation/MMOptimisation.xcodeproj/
 ## User settings
 xcuserdata/
-*.pbxproj
+.pbxproj
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
 *.xccheckout
