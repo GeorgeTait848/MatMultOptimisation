@@ -124,72 +124,88 @@ public struct SparseMatrix {
     }
     
     public static func * (lhs: SparseMatrix, rhs: SparseMatrix) -> SparseMatrix {
-        /*
-         The code below was not added during the "week of coding" instead the above commented out
-         code was used (it was needed only to conform to OperatorType and a proper sparse
-         implementation was not needed for performance at that time).
-         
-         The below code was added to produce a figure Figure 10.4 after the week of coding and
-         is based on some old java code of mine written with Peter Stiffell.
-         
-         It does not conform to my current view of clean code and needs to be re-written
-         for clarity. This should only be done once a final sparse representation has been
-         decided.
-         */
+        
         assert(lhs.size==rhs.size, "Cannot multiply sparse matrices of different sizes.")
         
         let dim = lhs.size
         
-        var cntr = 0
-        var kk = 0
-        var k = 0
+        var lhsCurrRowIdx = 0
+        var lhsCurrIdx = 0
         
         var output = SparseMatrix(size: lhs.size)
-        var B_el_t = rhs.transpose()
+        var rhs_transpose = rhs.transpose()
         
-        var values = lhs.values
-        values.sort()
-        B_el_t.values.sort()
+        var lhsvals = lhs.values
+        lhsvals.sort()
+        rhs_transpose.values.sort()
         
-        for  i in 0 ..< dim {
-            var l = 0
-            for j in 0 ..< dim {
-                var sum = 0.0
+        for row in 0 ..< dim {
+            var rhs_idx = 0
+            for col in 0 ..< dim {
+                var currOutputVal = 0.0
                 var activePoint = false
-                k = kk
-                times2 : while ( k < values.count ) {
-                    if (values[k].row == i) {
-                        times1 : while( l < B_el_t.values.count ) {
-                            if(B_el_t.values[l].row == j) {
-                                if(values[k].col == B_el_t.values[l].col) {
-                                    sum = sum + (values[k].value * B_el_t.values[l].value)
-                                    activePoint = true
-                                    break times1
-                                } else if (B_el_t.values[l].col < values[k].col) {
-                                    l += 1
-                                } else {
-                                    break times1
-                                }
-                            } else if (B_el_t.values[l].row < j) {
-                                l += 1
-                            } else {
-                                break times1
-                            }
+                lhsCurrIdx = lhsCurrRowIdx
+                lhsRowChecker : while ( lhsCurrIdx < lhsvals.count ) {
+                    
+                    if (lhsvals[lhsCurrIdx].row != row) { break lhsRowChecker }
+                    
+                    rhsIndexChecker : while( rhs_idx < rhs_transpose.values.count ) {
+                        
+                        if rhs_transpose.values[rhs_idx].row < col {
+                            //if the current column in rhs (non-transposed) is before col, then continue to next.
+                            rhs_idx += 1
+                            continue rhsIndexChecker
                         }
-                        k += 1
-                    } else {
-                        break times2
+                        
+                        if rhs_transpose.values[rhs_idx].row > col {
+                            //if we have gone past the required column for the sum, then break.
+                            break rhsIndexChecker
+                        }
+                        
+                        if rhs_transpose.values[rhs_idx].col < lhsvals[lhsCurrIdx].col {
+                            
+                            rhs_idx += 1
+                            continue rhsIndexChecker
+                        }
+                        
+                        if rhs_transpose.values[rhs_idx].col > lhsvals[lhsCurrIdx].col {
+                            break rhsIndexChecker
+                        }
+                        
+                        currOutputVal += (lhsvals[lhsCurrIdx].value * rhs_transpose.values[rhs_idx].value)
+                        activePoint = true
+                        break rhsIndexChecker
+                        
                     }
+                    lhsCurrIdx += 1
+                
                 }
+                
                 if(activePoint) {
-                    output.values.append(CoordinateStorage(value: sum, row: i, col: j))
-                    cntr += 1
+                    output.values.append(CoordinateStorage(value: currOutputVal, row: row, col: col))
                 }
+                
+                
             }
-            kk = k
+            lhsCurrRowIdx = lhsCurrIdx
         }
         output.values.sort()
         return output
+    }
+    
+    public func newMM() {
+        
+        //Store elements as nested dictionaries.
+        
+        //i.e row:col:val
+        
+        // so the 3x3 identity would have values as:
+        
+        //values = [0: [0:1], 1: [1:1], 2: [2:1]]
+        
+        //Hence, one can use a lhs matrix searching for rows to sum over, and can transpose the rhs to search for columns.
+        
+        return
     }
     
     

@@ -9,7 +9,7 @@ import Foundation
 
 print("Hello, World!")
 //
-let pathFromHomeDirectory = CommandLine.arguments[1]
+//let pathFromHomeDirectory = CommandLine.arguments[1]
 //
 ////let dims = Array(1...200) + Array(stride(from: 201, through: 10_000, by: 100))
 //let dims = Array(stride(from: 2, through: 500, by: 10))
@@ -41,11 +41,16 @@ let pathFromHomeDirectory = CommandLine.arguments[1]
 
 let dims = Array(stride(from: 201, through: 10_000, by: 100))
 let sparseMM: (SparseMatrix, SparseMatrix) -> SparseMatrix = {A,B in return A*B}
-
 let (tcsp, spr_sq, sp_lna, sptt) = estimateTimeComplexity(dims: dims, operation: sparseMM)
 
-print(tcsp, spr_sq, sp_lna, sptt)
+print("Main Diagonal", tcsp, spr_sq, sp_lna, sptt)
 
-storeElapsedTimeDataToFileSparse(dims: dims, operations: [sparseMM], columnNames: ["Sparse MM"], pathFromHomeDirectory: pathFromHomeDirectory, logScaleX: true, logScaleY: true)
+//storeElapsedTimeDataToFileSparse(dims: dims, operations: [sparseMM], columnNames: ["Sparse MM"], pathFromHomeDirectory: pathFromHomeDirectory, logScaleX: true, logScaleY: true)
+//
 
 
+//let x = SparseMatrix(from: DoubleMatrixRowMajor(size: 3, elements: [1,2,3,0,1,0,1,0,1]))
+//let y = SparseMatrix(from: DoubleMatrixRowMajor(size: 3, elements: [1,2,1,1,0,0,4,5,2]))
+//
+//
+//print(x*y)
