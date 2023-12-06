@@ -1,5 +1,9 @@
 import Foundation
 
+
+public enum SparseMatrixErrors: Error {
+    case InvalidInputElementsSize
+}
 public struct SparseMatrix {
     
     let size: Int
@@ -17,6 +21,20 @@ public struct SparseMatrix {
         }
         values.sort()
     }
+    
+    public init(from rowMajorElements: [Double], size: Int) {
+        
+        self.size = size
+        values = []
+        for i in 0 ..< size*size {
+            if rowMajorElements[i] == 0.0 { continue }
+            let row = i / size
+            let col = i % size
+            values.append(CoordinateStorage(value: rowMajorElements[i], row: row, col: col))
+        }
+        values.sort()
+    }
+    
     public init (size: Int) {
         self.size=size
         self.values = []
@@ -26,6 +44,29 @@ public struct SparseMatrix {
     public init (values: [CoordinateStorage], size: Int) {
         self.size=size
         self.values = values.sorted()
+    }
+    
+    public init(size: Int, density: Double) {
+        self.size = size
+        
+        if density == 0.0 {
+            values = []
+            return
+        }
+        
+        values = []
+        let doubleSz = Double(size)
+        let numElem = density*doubleSz*doubleSz
+        let step = Int((doubleSz*doubleSz-1)/(numElem - 1))
+        var i = 0
+        
+        while i < size*size {
+            let row = i/size
+            let col = i % size
+            values.append(CoordinateStorage(value: 1, row: row, col: col))
+            i += step
+        }
+        
     }
     
     
@@ -124,11 +165,8 @@ public struct SparseMatrix {
     }
     
     public static func * (lhs: SparseMatrix, rhs: SparseMatrix) -> SparseMatrix {
-        
         assert(lhs.size==rhs.size, "Cannot multiply sparse matrices of different sizes.")
-        
         let dim = lhs.size
-        
         var lhsCurrRowIdx = 0
         var lhsCurrIdx = 0
         
@@ -148,44 +186,31 @@ public struct SparseMatrix {
                 lhsRowChecker : while ( lhsCurrIdx < lhsvals.count ) {
                     
                     if (lhsvals[lhsCurrIdx].row != row) { break lhsRowChecker }
-                    
+        
                     rhsIndexChecker : while( rhs_idx < rhs_transpose.values.count ) {
                         
                         if rhs_transpose.values[rhs_idx].row < col {
-                            //if the current column in rhs (non-transposed) is before col, then continue to next.
                             rhs_idx += 1
                             continue rhsIndexChecker
                         }
-                        
-                        if rhs_transpose.values[rhs_idx].row > col {
-                            //if we have gone past the required column for the sum, then break.
-                            break rhsIndexChecker
-                        }
+                        if rhs_transpose.values[rhs_idx].row > col { break rhsIndexChecker }
                         
                         if rhs_transpose.values[rhs_idx].col < lhsvals[lhsCurrIdx].col {
-                            
                             rhs_idx += 1
                             continue rhsIndexChecker
                         }
                         
-                        if rhs_transpose.values[rhs_idx].col > lhsvals[lhsCurrIdx].col {
-                            break rhsIndexChecker
-                        }
-                        
+                        if rhs_transpose.values[rhs_idx].col > lhsvals[lhsCurrIdx].col { break rhsIndexChecker }
+    
                         currOutputVal += (lhsvals[lhsCurrIdx].value * rhs_transpose.values[rhs_idx].value)
                         activePoint = true
                         break rhsIndexChecker
-                        
                     }
                     lhsCurrIdx += 1
-                
                 }
-                
                 if(activePoint) {
                     output.values.append(CoordinateStorage(value: currOutputVal, row: row, col: col))
                 }
-                
-                
             }
             lhsCurrRowIdx = lhsCurrIdx
         }

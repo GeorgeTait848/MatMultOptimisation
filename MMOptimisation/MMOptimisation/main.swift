@@ -39,18 +39,19 @@ print("Hello, World!")
 //
 
 
-let dims = Array(stride(from: 201, through: 10_000, by: 100))
+let dims = Array(stride(from: 10, through: 100, by: 10))
 let sparseMM: (SparseMatrix, SparseMatrix) -> SparseMatrix = {A,B in return A*B}
-let (tcsp, spr_sq, sp_lna, sptt) = estimateTimeComplexity(dims: dims, operation: sparseMM)
-
-print("Main Diagonal", tcsp, spr_sq, sp_lna, sptt)
+//let (tcsp, spr_sq, sp_lna, sptt) = estimateTimeComplexity(dims: dims, operation: sparseMM)
+//
+//print("Sparsity = 0", tcsp, spr_sq, sp_lna, sptt)
 
 //storeElapsedTimeDataToFileSparse(dims: dims, operations: [sparseMM], columnNames: ["Sparse MM"], pathFromHomeDirectory: pathFromHomeDirectory, logScaleX: true, logScaleY: true)
 //
 
 
-//let x = SparseMatrix(from: DoubleMatrixRowMajor(size: 3, elements: [1,2,3,0,1,0,1,0,1]))
-//let y = SparseMatrix(from: DoubleMatrixRowMajor(size: 3, elements: [1,2,1,1,0,0,4,5,2]))
-//
-//
-//print(x*y)
+//let x = SparseMatrix(size: 3, density: 1)
+//print(x)
+
+
+let t = getElapsedTimeData(dims: dims, operation: sparseMM, initMethod: "density", density: 1)
+print(t)

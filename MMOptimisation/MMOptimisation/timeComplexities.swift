@@ -159,11 +159,26 @@ public func estimateTimeComplexity(dims: [Int], operation: (SparseMatrix, Sparse
 }
 
 
-public func getElapsedTimeData(dims: [Int], operation: (SparseMatrix, SparseMatrix) -> SparseMatrix) -> [Double] {
+public func getElapsedTimeData(dims: [Int], operation: (SparseMatrix, SparseMatrix) -> SparseMatrix, initMethod: String = "", density: Double = 1, diag: Int = 0) -> [Double] {
 
+    var lhs: [SparseMatrix]
+    var rhs: [SparseMatrix]
     
-    let lhs = dims.map{SparseMatrix(diag: 0, size: $0)}
-    let rhs = dims.map{SparseMatrix(diag: 0, size: $0)}
+    switch initMethod {
+        
+    case "density":
+        lhs = dims.map{SparseMatrix(size: $0, density: density)}
+        rhs = dims.map{SparseMatrix(size: $0, density: density)}
+        
+    case "diag":
+        lhs = dims.map{SparseMatrix(diag: diag, size: $0)}
+        rhs = dims.map{SparseMatrix(diag: diag, size: $0)}
+        
+    default:
+        lhs = dims.map{SparseMatrix(diag: 0, size: $0)}
+        rhs = dims.map{SparseMatrix(diag: 0, size: $0)}
+    }
+    
     
     var times = [Double](repeating: 0, count: dims.count)
     
