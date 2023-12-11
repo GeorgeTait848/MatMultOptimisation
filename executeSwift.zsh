@@ -27,7 +27,7 @@ echo "set key autotitle columnheader" >> "$plotScriptPath"
 echo "set key font 'Times-Roman 12'" >> $plotScriptPath
 echo "set key left top" >> $plotScriptPath
 echo "set grid linecolor rgb 'black'" >> $plotScriptPath
-echo "num_columns=$(awk '{print NF; exit}' "$pathForFile")" >> "$plotScriptPath"
+echo "num_columns=\"$(awk '{print NF; exit}' "$pathForFile")\"" >> "$plotScriptPath"
 
 # Loop over each curve and plot, and append to the file
 echo "plot for [i=2:num_columns] '${pathForFile}' using 1:i with linespoints" >> "$plotScriptPath"

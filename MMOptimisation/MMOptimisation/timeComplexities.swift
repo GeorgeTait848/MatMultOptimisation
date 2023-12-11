@@ -142,9 +142,9 @@ public func convertElapsedTimeDataToWriteableFormatRowMajor(dims: [Int], operati
 }
 
 
-public func estimateTimeComplexity(dims: [Int], operation: (SparseMatrix, SparseMatrix) -> SparseMatrix) -> (Double, Double, Double, Double) {
+public func estimateTimeComplexity(dims: [Int], operation: (SparseMatrix, SparseMatrix) -> SparseMatrix, initMethod: String = "", density: Double = 1, diag: Int = 0) -> (Double, Double, Double, Double) {
     
-    let elapsedTimes = getElapsedTimeData(dims: dims, operation: operation)
+    let elapsedTimes = getElapsedTimeData(dims: dims, operation: operation, initMethod: initMethod, density: density, diag: diag)
     let totalTime = elapsedTimes.reduce(0, +)
     let logElapsedTimes = elapsedTimes.map{ log($0) }
     
@@ -169,6 +169,7 @@ public func getElapsedTimeData(dims: [Int], operation: (SparseMatrix, SparseMatr
     case "density":
         lhs = dims.map{SparseMatrix(size: $0, density: density)}
         rhs = dims.map{SparseMatrix(size: $0, density: density)}
+        print("Calculating time complexity for density = \(density)")
         
     case "diag":
         lhs = dims.map{SparseMatrix(diag: diag, size: $0)}
@@ -228,7 +229,7 @@ public func convertElapsedTimeDataToWriteableFormatSparse(dims: [Int], operation
     var times = [[Double]](repeating: [Double](repeating: 0.0, count: dims.count), count: operations.count)
 
     for i in 0..<operations.count {
-        let currTimes = getElapsedTimeData(dims: dims, operation: operations[i])
+        let currTimes = getElapsedTimeData(dims: dims, operation: operations[i], initMethod: "diagonal", diag: 0)
         
         if logScaleY { times[i] = currTimes.map{log($0)}}
         else {times[i] = currTimes}

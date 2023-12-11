@@ -67,6 +67,8 @@ public struct SparseMatrix {
             i += step
         }
         
+        values.sort()
+        
     }
     
     
@@ -218,20 +220,87 @@ public struct SparseMatrix {
         return output
     }
     
-    public func newMM() {
+
+    
+    public func diagMM(rhs: SparseMatrix) -> SparseMatrix {
         
-        //Store elements as nested dictionaries.
+        let lhsDiag = getDiag()
+        let rhsDiag = rhs.getDiag()
+        let outputDiag = lhsDiag + rhsDiag
         
-        //i.e row:col:val
+        if outputDiag >= self.size { return SparseMatrix(size: self.size)}
         
-        // so the 3x3 identity would have values as:
+        let (startRow, endRow) = getOutputRowLimits(diag: lhsDiag, outputDiag: outputDiag)
         
-        //values = [0: [0:1], 1: [1:1], 2: [2:1]]
+        let numOutputElem = endRow - startRow + 1
+        let (lhsOffset, rhsOffset) = getMultiplicationOffsets(numOutputElem: numOutputElem, diag: lhsDiag, rhsDiag: rhsDiag, outputDiag: outputDiag)
         
-        //Hence, one can use a lhs matrix searching for rows to sum over, and can transpose the rhs to search for columns.
+        var output = SparseMatrix(size: size)
         
-        return
+        for i in 0..<numOutputElem {
+            let val = self.values[i + lhsOffset].value * rhs.values[i + rhsOffset].value
+            
+            output.values.append(CoordinateStorage(value: val, row: startRow + i, col: startRow + i + outputDiag))
+        }
+        
+        return output
     }
+    
+    private func getDiag() -> Int {
+        
+        if self.values[0].row == 0 {
+            return self.values[0].col
+        }
+        
+        return -self.values[0].row
+    }
+    
+    private func getOutputRowLimits(diag: Int, outputDiag: Int) -> (Int, Int) {
+        
+        var startRow: Int
+        var endRow: Int
+        
+        if outputDiag <= 0 {
+            if diag <= 0 {
+                startRow =  -min(diag, outputDiag)
+                endRow = self.size - 1
+            }
+            else {
+                startRow =  -outputDiag
+                endRow = self.size - diag - 1
+            }
+        }
+        
+        else {
+            if diag <= 0 {
+                startRow = -diag
+                endRow = self.size - outputDiag - 1
+            }
+            else {
+                startRow = 0
+                endRow = self.size - max(diag, outputDiag) - 1
+            }
+        }
+        
+        return (startRow, endRow)
+    }
+    
+    private func getMultiplicationOffsets(numOutputElem: Int, diag: Int, rhsDiag: Int, outputDiag: Int) -> (Int, Int) {
+        var lhsOffset: Int
+        var rhsOffset: Int
+        
+        if diag <= outputDiag {
+            lhsOffset = 0
+            rhsOffset = size - abs(rhsDiag) - numOutputElem
+        }
+        else {
+            lhsOffset = size - abs(diag) - numOutputElem
+            rhsOffset = 0
+        }
+        
+        return (lhsOffset, rhsOffset)
+    }
+
     
     
     public func transpose() -> SparseMatrix {

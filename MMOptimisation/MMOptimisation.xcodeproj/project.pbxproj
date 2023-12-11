@@ -10,6 +10,10 @@
 		600859842AE17B22006B90FD /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600859832AE17B22006B90FD /* main.swift */; };
 		6008598F2AE1B190006B90FD /* timeComplexities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008598E2AE1B190006B90FD /* timeComplexities.swift */; };
 		600859A92AE85484006B90FD /* DoubleMatrixRowMajor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */; };
+		60A560ED2B21B96D0068F236 /* tcAndDensity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A560EC2B21B96D0068F236 /* tcAndDensity.swift */; };
+		60A560EF2B21C9950068F236 /* matrixMultiplicationTimeComplexity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A560EE2B21C9950068F236 /* matrixMultiplicationTimeComplexity.swift */; };
+		60A560F12B21C9C50068F236 /* sparseDiagonalTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A560F02B21C9C50068F236 /* sparseDiagonalTC.swift */; };
+		60CCF7EE2B27886B00919138 /* testDiagMMAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CCF7ED2B27886B00919138 /* testDiagMMAlgorithm.swift */; };
 		60F702322B1B82B900E5A461 /* SparseMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F702312B1B82B900E5A461 /* SparseMatrix.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +36,10 @@
 		600859962AE66751006B90FD /* AlgorithmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlgorithmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		600859A12AE68153006B90FD /* MMOptimisationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MMOptimisationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleMatrixRowMajor.swift; sourceTree = "<group>"; };
+		60A560EC2B21B96D0068F236 /* tcAndDensity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tcAndDensity.swift; sourceTree = "<group>"; };
+		60A560EE2B21C9950068F236 /* matrixMultiplicationTimeComplexity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = matrixMultiplicationTimeComplexity.swift; sourceTree = "<group>"; };
+		60A560F02B21C9C50068F236 /* sparseDiagonalTC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sparseDiagonalTC.swift; sourceTree = "<group>"; };
+		60CCF7ED2B27886B00919138 /* testDiagMMAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testDiagMMAlgorithm.swift; sourceTree = "<group>"; };
 		60F702312B1B82B900E5A461 /* SparseMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparseMatrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,6 +90,10 @@
 			isa = PBXGroup;
 			children = (
 				600859832AE17B22006B90FD /* main.swift */,
+				60CCF7ED2B27886B00919138 /* testDiagMMAlgorithm.swift */,
+				60A560EE2B21C9950068F236 /* matrixMultiplicationTimeComplexity.swift */,
+				60A560F02B21C9C50068F236 /* sparseDiagonalTC.swift */,
+				60A560EC2B21B96D0068F236 /* tcAndDensity.swift */,
 				6008598E2AE1B190006B90FD /* timeComplexities.swift */,
 				600859A82AE85484006B90FD /* DoubleMatrixRowMajor.swift */,
 				60F702312B1B82B900E5A461 /* SparseMatrix.swift */,
@@ -206,10 +218,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60A560F12B21C9C50068F236 /* sparseDiagonalTC.swift in Sources */,
 				60F702322B1B82B900E5A461 /* SparseMatrix.swift in Sources */,
+				60CCF7EE2B27886B00919138 /* testDiagMMAlgorithm.swift in Sources */,
+				60A560EF2B21C9950068F236 /* matrixMultiplicationTimeComplexity.swift in Sources */,
 				6008598F2AE1B190006B90FD /* timeComplexities.swift in Sources */,
 				600859A92AE85484006B90FD /* DoubleMatrixRowMajor.swift in Sources */,
 				600859842AE17B22006B90FD /* main.swift in Sources */,
+				60A560ED2B21B96D0068F236 /* tcAndDensity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
